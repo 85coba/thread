@@ -79,8 +79,8 @@ export default {
     }
   },
 
-mounted() {
-        this.fetchComments(this.tweet.id);
+created() {
+          this.fetchComments(this.tweet.id);
     },
 
   computed: {
