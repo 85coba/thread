@@ -4,7 +4,8 @@
       <template v-for="tweet in tweets">
         <TweetPreview v-if="!isCardPriview" :key="tweet.id" 
             :tweet="tweet" 
-            :user="user" 
+            :user="user"
+            :comments="comments"
             @click="onTweetClick"/>
         
         <TweetPreviewCard v-else :key="tweet.id" 
@@ -25,7 +26,7 @@
 import InfiniteLoading from "vue-infinite-loading";
 import TweetPreview from "./TweetPreview.vue";
 import TweetPreviewCard from "./TweetPreviewCard";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TweetPreviewList",
@@ -34,7 +35,7 @@ export default {
     tweets: {
       type: Array,
       required: true
-    }
+    },
   },
 
   components: {
@@ -43,9 +44,19 @@ export default {
     TweetPreviewCard
   },
 
+  async created() { 
+        await this.fetchAuthenticatedUser().then(() => {
+        this.fetchCommentsAll(this.user.id);
+      }); 
+  },
+
   computed: {
-    ...mapGetters("auth", {
-      user: "getAuthenticatedUser"
+    ...mapGetters("auth",{
+      user:"getAuthenticatedUser"
+    }),
+    
+    ...mapGetters("comment",
+    {comments: "getCommentsSortedByCreatedDateAsc"
     }),
 
     ...mapGetters("tweet", {
@@ -54,6 +65,9 @@ export default {
   },
 
   methods: {
+    ...mapActions("comment", ["fetchCommentsAll"]),
+    ...mapActions("auth", ["fetchAuthenticatedUser"]),
+
     onTweetClick(tweet) {
       this.$router.push({ name: "tweet-page", params: { id: tweet.id } });
     },

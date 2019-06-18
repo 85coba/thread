@@ -25,6 +25,7 @@ use App\Action\Comment\UploadCommentImageAction;
 use App\Action\Comment\UploadCommentImageRequest;
 use App\Action\Comment\DeleteCommentAction;
 use App\Action\Comment\DeleteCommentRequest;
+use App\Action\Comment\GetCommentCollectionByUserIdAction;
 
 final class CommentController extends ApiController
 {
@@ -35,6 +36,7 @@ final class CommentController extends ApiController
     private $getCommentCollectionByTweetIdAction;
     private $updateCommentAction;
     private $uploadCommentImageAction;
+    private $getCommentCollectionByUserIdAction;
 
     public function __construct(
         GetCommentCollectionAction $getCommentCollectionAction,
@@ -44,7 +46,8 @@ final class CommentController extends ApiController
         GetCommentCollectionByTweetIdAction $getCommentCollectionByTweetIdAction,
         UpdateCommentAction $upadteCommentAction,
         UploadCommentImageAction $uploadCommentImageAction,
-        DeleteCommentAction $deleteCommentAction
+        DeleteCommentAction $deleteCommentAction,
+        GetCommentCollectionByUserIdAction $getCommentCollectionByUserIdAction
     ) {
         $this->getCommentCollectionAction = $getCommentCollectionAction;
         $this->presenter = $presenter;
@@ -54,6 +57,7 @@ final class CommentController extends ApiController
         $this->updateCommentAction = $upadteCommentAction;
         $this->uploadCommentImageAction = $uploadCommentImageAction;
         $this->deleteCommentAction = $deleteCommentAction;
+        $this->getCommentCollectionByUserIdAction = $getCommentCollectionByUserIdAction;
     }
 
     public function getCommentCollection(CollectionHttpRequest $request): ApiResponse
@@ -146,5 +150,15 @@ final class CommentController extends ApiController
         );
 
         return $this->createDeletedResponse();
+    }
+
+    public function getCommentCollectionByUserId($userId): ApiResponse
+    {   
+
+        $response = $this->getCommentCollectionByUserIdAction->execute((int)$userId);
+
+        return $this->createSuccessResponse(
+            $this->presenter->presentCollection($response)
+        );
     }
 }

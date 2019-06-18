@@ -33,7 +33,7 @@
               <span
                 class="icon is-medium has-text-info"
                 :class="{
-                                                    'has-text-danger': tweetIsCommentedByUser(tweet.id, user.id)
+                                                    'has-text-danger': tweetIsCommentedByUser(this.tweet.id, this.user.id)
                                                 }"
               >
                 <font-awesome-icon icon="comments"/>
@@ -76,20 +76,17 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    comments: {
+      required: true
     }
   },
-
-created() {
-          this.fetchComments(this.tweet.id);
-    },
 
   computed: {
     ...mapGetters("tweet", ["tweetIsLikedByUser"]),
     ...mapGetters("comment", ["tweetIsCommentedByUser"])
   },
-  methods: {
-    ...mapActions("comment", ["fetchComments"])
-  }
+
 };
 </script>
 

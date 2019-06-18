@@ -30,7 +30,9 @@
       </div>
     </div>
 
-    <TweetPreviewList :tweets="tweets" @infinite="infiniteHandler"/>
+    <TweetPreviewList 
+      :tweets="tweets"
+      @infinite="infiniteHandler"/>
 
     <b-modal :active.sync="isNewTweetModalActive" has-modal-card>
       <NewTweetForm/>
@@ -83,11 +85,13 @@ export default {
   },
 
   computed: {
+
     ...mapGetters("tweet", [
       "tweetsSortedByCreatedDate",
       "tweetsSortedByCreatedDateDown",
       "tweetsSortedBylikesCount",
     ]),
+
     tweets: function() {
       switch (this.SortBy) {
         case "Date":

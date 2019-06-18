@@ -59,4 +59,9 @@ final class CommentRepository implements Paginable
                     ->where('author_id', $userId)
                     ->firstOrFail();
     }
+
+    public function getCommentsByUserId(int $userId) 
+    {
+        return Comment::where('author_id', $userId)->get();
+    }
 }

@@ -83,10 +83,6 @@ export default {
     }
   },
 
-  mounted() {
-    this.fetchComments(this.tweet.id);
-  },
-
   computed: {
     ...mapGetters("tweet", ["tweetIsLikedByUser"]),
     ...mapGetters("comment", ["tweetIsCommentedByUser"])

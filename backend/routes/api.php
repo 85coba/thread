@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}', 'UserController@getUserById');
             Route::get('/{id}/tweets', 'TweetController@getTweetCollectionByUserId');
             Route::get('/{id}/tweets/like', 'TweetController@getLikedTweetCollectionByUserId');
+            Route::get('/{id}/comments', 'CommentController@getCommentCollectionByUserId');
         });
 
         Route::group([
