@@ -72,6 +72,7 @@ export default {
       });
 
       if (this.image === null) {
+        this.$parent.close();
         return;
       }
 

@@ -74,6 +74,7 @@ export default {
 
     clearInput() {
       this.text = "";
+      this.image = null;
     },
 
     async onPostComment() {
@@ -83,6 +84,7 @@ export default {
       });
 
       if (this.image === null) {
+        this.$parent.close();
         return;
       }
 

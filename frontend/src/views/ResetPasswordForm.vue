@@ -64,7 +64,7 @@ export default {
         password_confirmation: this.password_confirmation
       };
       const message = this.actionResetPassword(payload);
-      this.showSuccessMessage(message);
+      this.showSuccessMessage('Done');
       this.$router.push({ name: "auth.signIn" });
     }
   }
